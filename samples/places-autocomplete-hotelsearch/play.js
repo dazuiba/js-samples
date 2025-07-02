@@ -1,10 +1,3 @@
-/**
- * @license
- * Copyright 2019 Google LLC. All Rights Reserved.
- * SPDX-License-Identifier: Apache-2.0
- */
-
-// [START maps_places_autocomplete_hotelsearch]
 // This example uses the autocomplete feature of the Google Places API.
 // It allows the user to find all hotels in a given place, within a given
 // country. It then displays markers for all the hotels returned,
@@ -109,7 +102,7 @@ function initMap(): void {
       types: ["administrative_area_level_1"],
       componentRestrictions: countryRestrict,
       fields: ["geometry"],
-    }
+    },
   );
   places = new google.maps.places.PlacesService(map);
 
@@ -118,7 +111,7 @@ function initMap(): void {
   // Add a DOM event listener to react when the user selects a country.
   (document.getElementById("country") as HTMLSelectElement).addEventListener(
     "change",
-    setAutocompleteCountry
+    setAutocompleteCountry,
   );
 }
 
@@ -149,7 +142,7 @@ function search() {
     (
       results: google.maps.places.PlaceResult[] | null,
       status: google.maps.places.PlacesServiceStatus,
-      pagination: google.maps.places.PlaceSearchPagination | null
+      pagination: google.maps.places.PlaceSearchPagination | null,
     ) => {
       if (status === google.maps.places.PlacesServiceStatus.OK && results) {
         clearResults();
@@ -159,7 +152,7 @@ function search() {
         // assign a letter of the alphabetic to each marker icon.
         for (let i = 0; i < results.length; i++) {
           const markerLetter = String.fromCharCode(
-            "A".charCodeAt(0) + (i % 26)
+            "A".charCodeAt(0) + (i % 26),
           );
           const markerIcon = MARKER_PATH + markerLetter + ".png";
 
@@ -179,7 +172,7 @@ function search() {
           addResult(results[i], i);
         }
       }
-    }
+    },
   );
 }
 
@@ -272,7 +265,7 @@ function showInfoWindow() {
 
       infoWindow.open(map, marker);
       buildIWContent(place);
-    }
+    },
   );
 }
 
@@ -344,5 +337,4 @@ declare global {
   }
 }
 window.initMap = initMap;
-// [END maps_places_autocomplete_hotelsearch]
 export {};

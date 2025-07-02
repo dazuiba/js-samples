@@ -103,7 +103,7 @@ export class GoogleMapsSample extends LitElement {
   showToolbar?: boolean = false;
 
   @property()
-  previewHeight?: string = "400px";
+  previewHeight?: string = "800px";
 
   @property()
   name: string = "";

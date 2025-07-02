@@ -15,7 +15,7 @@ const config: PlaywrightTestConfig = {
       width: 600,
       height: 1200,
     },
-    baseURL: "http://localhost:8080/",
+    baseURL: "http://localhost:8081/",
     // headless: process.env.CI ? true : false,
     // launchOptions: {
     //   slowMo: process.env.CI ? undefined : 100,
@@ -23,7 +23,7 @@ const config: PlaywrightTestConfig = {
   },
   webServer: {
     command: "npm run serve",
-    port: 8080,
+    port: 8081,
   },
   updateSnapshots: "none",
   projects: [

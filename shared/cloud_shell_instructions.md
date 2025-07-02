@@ -27,7 +27,7 @@ npm i
 After installation, Vite can be called using the following command.
 
 ```bash
-npm start -- --port=8080
+npm start -- --port=8081
 ```
 
 For configuration of Vite, check
@@ -37,7 +37,7 @@ For configuration of Vite, check
 
 Once your app is built (should take a few moments), you can launch it via
 <walkthrough-spotlight-pointer target="cloudshell" spotlightId="devshell-web-preview-button">Web
-Preview button</walkthrough-spotlight-pointer> using the **port 8080**.
+Preview button</walkthrough-spotlight-pointer> using the **port 8081**.
 
 ## Update the Google Maps API key
 
@@ -53,7 +53,7 @@ After changing the key, the Webpack server must be restarted with the following
 command:
 
 ```bash
-npm start -- --port=8080
+npm start -- --port=8081
 ```
 
 ## Inspect and edit the application files

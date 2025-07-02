@@ -29,6 +29,9 @@ permalink: /index.html
         background: #f5f5f5;
         font-weight: normal;
       }
+      .card-header.active {
+        background: #ffeb3b;
+      }
       .card-footer {
         padding: 10px;
         display: flex;
@@ -83,14 +86,67 @@ permalink: /index.html
       </style>
 
       <script>
+        function getInitialUrl() {
+          const fragment = window.location.hash.substring(1);
+          return fragment ? decodeURIComponent(fragment) : "{{ defaultInitial }}";
+        }
+
         function setIframe(src) {
           document.getElementById('iframe').src = src;
+          document.getElementById('path').textContent = src;
+          document.getElementById('path').href = src;
+          window.location.hash = encodeURIComponent(src);
+          highlightActiveCard(src);
         }
+
+        function highlightActiveCard(src) {
+          // Remove previous highlights
+          document.querySelectorAll('.card-header.active').forEach(header => {
+            header.classList.remove('active');
+          });
+
+          // Extract sample name from different URL patterns
+          let sampleName = '';
+          if (src.includes('?sample=')) {
+            sampleName = src.split('?sample=')[1];
+          } else if (src.includes('/samples/')) {
+            const match = src.match(/\/samples\/([^\/]+)\//);             
+            if (match) sampleName = match[1];
+          }
+
+          if (sampleName) {
+            // Find and highlight the corresponding card
+            const cards = document.querySelectorAll('.card');
+            cards.forEach(card => {
+              const header = card.querySelector('.card-header');
+              if (header && header.textContent.trim() === sampleName) {
+                header.classList.add('active');
+                // Scroll the card into view
+                card.scrollIntoView({ behavior: 'smooth', block: 'center' });
+              }
+            });
+          }
+        }
+
+        function updateCurrentDisplay() {
+          const iframe = document.getElementById('iframe');
+          const currentSrc = iframe.src;
+          document.getElementById('path').textContent = currentSrc;
+          document.getElementById('path').href = currentSrc;
+        }
+
+        window.addEventListener('load', function() {
+          const initialUrl = getInitialUrl();
+          document.getElementById('iframe').src = initialUrl;
+          document.getElementById('path').textContent = initialUrl;
+          document.getElementById('path').href = initialUrl;
+          highlightActiveCard(initialUrl);
+        });
       </script>
   </head>
   <body>
 
-  {% set initial="./samples/playground.html?sample=map-simple" %}
+  {% set defaultInitial="./samples/playground.html?sample=map-simple" %}
 
   <div style="display:flex;gap: 10px; height: 100vh;">
     <div id="sidebar">
@@ -107,9 +163,10 @@ permalink: /index.html
       {% endfor %}
     </div>
     <div style="display:flex; flex-direction: column; gap: 10px; flex-grow: 1;">
-      <iframe id="iframe" src="{{ initial }}" allow="geolocation"></iframe>
-      <p>Rendering <a id="path" href="{{ initial }}">{{ initial }}</a></p>
+      <iframe id="iframe" src="" allow="geolocation"></iframe>
+      <p>Rendering1 <a id="path" href=""></a></p>
     </div>
   </div>
   </body>
 </html>
+No newline at end of file
