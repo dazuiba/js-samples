@@ -11,8 +11,7 @@ function initMap(): void {
   // Create the map with no initial style specified.
   // It therefore has default styling.
   map = new google.maps.Map(document.getElementById("map") as HTMLElement, {
-    center: { lat: -33.86, lng: 151.209 },
-    zoom: 13,
+    center: { lat: 30.2658, lng: 120.1347 }, zoom: 16,
     mapTypeControl: false,
   });
 

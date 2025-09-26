@@ -1,10 +1,3 @@
-/**
- * @license
- * Copyright 2019 Google LLC. All Rights Reserved.
- * SPDX-License-Identifier: Apache-2.0
- */
-
-// [START maps_places_autocomplete_hotelsearch]
 // This example uses the autocomplete feature of the Google Places API.
 // It allows the user to find all hotels in a given place, within a given
 // country. It then displays markers for all the hotels returned,
@@ -19,6 +12,8 @@ let places: google.maps.places.PlacesService;
 let infoWindow: google.maps.InfoWindow;
 let markers: google.maps.Marker[] = [];
 let autocomplete: google.maps.places.Autocomplete;
+let viewportPolygon: google.maps.Polygon;
+let currentViewport: google.maps.LatLngBounds;
 
 const countryRestrict = { country: "cn" };
 const MARKER_PATH =
@@ -30,67 +25,53 @@ const countries: Record<
   { center: google.maps.LatLngLiteral; zoom: number }
 > = {
   au: {
-    center: { lat: -25.3, lng: 133.8 },
-    zoom: 4,
+    center: { lat: 30.2658, lng: 120.1347 }, zoom: 16,
   },
   cn: {
-    center: { lat: 35.9, lng: 104.2 },
-    zoom: 4,
+    center: { lat: 30.2658, lng: 120.1347 }, zoom: 16,
   },
   br: {
-    center: { lat: -14.2, lng: -51.9 },
-    zoom: 3,
+    center: { lat: 30.2658, lng: 120.1347 }, zoom: 16,
   },
   ca: {
-    center: { lat: 62, lng: -110.0 },
-    zoom: 3,
+    center: { lat: 30.2658, lng: 120.1347 }, zoom: 16,
   },
   fr: {
-    center: { lat: 46.2, lng: 2.2 },
-    zoom: 5,
+    center: { lat: 30.2658, lng: 120.1347 }, zoom: 16,
   },
   de: {
-    center: { lat: 51.2, lng: 10.4 },
-    zoom: 5,
+    center: { lat: 30.2658, lng: 120.1347 }, zoom: 16,
   },
   mx: {
-    center: { lat: 23.6, lng: -102.5 },
-    zoom: 4,
+    center: { lat: 30.2658, lng: 120.1347 }, zoom: 16,
   },
   nz: {
-    center: { lat: -40.9, lng: 174.9 },
-    zoom: 5,
+    center: { lat: 30.2658, lng: 120.1347 }, zoom: 16,
   },
   it: {
-    center: { lat: 41.9, lng: 12.6 },
-    zoom: 5,
+    center: { lat: 30.2658, lng: 120.1347 }, zoom: 16,
   },
   za: {
-    center: { lat: -30.6, lng: 22.9 },
-    zoom: 5,
+    center: { lat: 30.2658, lng: 120.1347 }, zoom: 16,
   },
   es: {
-    center: { lat: 40.5, lng: -3.7 },
-    zoom: 5,
+    center: { lat: 30.2658, lng: 120.1347 }, zoom: 16,
   },
   pt: {
-    center: { lat: 39.4, lng: -8.2 },
-    zoom: 6,
+    center: { lat: 30.2658, lng: 120.1347 }, zoom: 16,
   },
   us: {
-    center: { lat: 37.1, lng: -95.7 },
-    zoom: 3,
+    center: { lat: 30.2658, lng: 120.1347 }, zoom: 16,
   },
   uk: {
-    center: { lat: 54.8, lng: -4.6 },
-    zoom: 5,
+    center: { lat: 30.2658, lng: 120.1347 }, zoom: 16,
   },
 };
 
 function initMap(): void {
   map = new google.maps.Map(document.getElementById("map") as HTMLElement, {
-    zoom: countries["us"].zoom,
-    center: countries["us"].center,
+    zoom: countries["cn"].zoom,
+    center: countries["cn"].center,
     mapTypeControl: false,
     panControl: false,
     zoomControl: false,
@@ -109,7 +90,7 @@ function initMap(): void {
       types: ["administrative_area_level_1"],
       componentRestrictions: countryRestrict,
       fields: ["geometry"],
-    }
+    },
   );
   places = new google.maps.places.PlacesService(map);
 
@@ -118,7 +99,7 @@ function initMap(): void {
   // Add a DOM event listener to react when the user selects a country.
   (document.getElementById("country") as HTMLSelectElement).addEventListener(
     "change",
-    setAutocompleteCountry
+    setAutocompleteCountry,
   );
 }
 
@@ -128,8 +109,38 @@ function onPlaceChanged() {
   const place = autocomplete.getPlace();
 
   if (place.geometry && place.geometry.location) {
-    map.panTo(place.geometry.location);
-    map.setZoom(15);
+    // Clear existing viewport polygon from previous place
+    if (viewportPolygon) {
+      viewportPolygon.setMap(null);
+    }
+    
+    // Use viewport if available, otherwise fallback to location + zoom
+    if (place.geometry.viewport) {
+      currentViewport = place.geometry.viewport;
+      map.fitBounds(place.geometry.viewport);
+      
+      // Create polygon to visualize viewport - store in dedicated global variable
+      viewportPolygon = new google.maps.Polygon({
+        paths: [
+          place.geometry.viewport.getNorthEast(),
+          { lat: place.geometry.viewport.getNorthEast().lat(), lng: place.geometry.viewport.getSouthWest().lng() },
+          place.geometry.viewport.getSouthWest(),
+          { lat: place.geometry.viewport.getSouthWest().lat(), lng: place.geometry.viewport.getNorthEast().lng() }
+        ],
+        strokeColor: "#FF0000",
+        strokeOpacity: 0.8,
+        strokeWeight: 2,
+        fillColor: "#FF0000",
+        fillOpacity: 0.1,
+        map: map
+      });
+    } else {
+      // Fallback to previous behavior
+      map.panTo(place.geometry.location);
+      map.setZoom(15);
+      currentViewport = map.getBounds() as google.maps.LatLngBounds;
+    }
+    
     search();
   } else {
     (document.getElementById("autocomplete") as HTMLInputElement).placeholder =
@@ -140,8 +151,8 @@ function onPlaceChanged() {
 // Search for hotels in the selected city, within the viewport of the map.
 function search() {
   const search = {
-    bounds: map.getBounds() as google.maps.LatLngBounds,
-    types: ["lodging"],
+    bounds: currentViewport || (map.getBounds() as google.maps.LatLngBounds),
+    types: ["attractions"],
   };
 
   places.nearbySearch(
@@ -149,7 +160,7 @@ function search() {
     (
       results: google.maps.places.PlaceResult[] | null,
       status: google.maps.places.PlacesServiceStatus,
-      pagination: google.maps.places.PlaceSearchPagination | null
+      pagination: google.maps.places.PlaceSearchPagination | null,
     ) => {
       if (status === google.maps.places.PlacesServiceStatus.OK && results) {
         clearResults();
@@ -159,7 +170,7 @@ function search() {
         // assign a letter of the alphabetic to each marker icon.
         for (let i = 0; i < results.length; i++) {
           const markerLetter = String.fromCharCode(
-            "A".charCodeAt(0) + (i % 26)
+            "A".charCodeAt(0) + (i % 26),
           );
           const markerIcon = MARKER_PATH + markerLetter + ".png";
 
@@ -179,7 +190,7 @@ function search() {
           addResult(results[i], i);
         }
       }
-    }
+    },
   );
 }
 
@@ -211,6 +222,11 @@ function setAutocompleteCountry() {
 
   clearResults();
   clearMarkers();
+  
+  // Clear viewport polygon when changing country
+  if (viewportPolygon) {
+    viewportPolygon.setMap(null);
+  }
 }
 
 function dropMarker(i) {
@@ -272,7 +288,7 @@ function showInfoWindow() {
 
       infoWindow.open(map, marker);
       buildIWContent(place);
-    }
+    },
   );
 }
 
@@ -344,5 +360,4 @@ declare global {
   }
 }
 window.initMap = initMap;
-// [END maps_places_autocomplete_hotelsearch]
 export {};

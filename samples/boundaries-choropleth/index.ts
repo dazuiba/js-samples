@@ -10,8 +10,7 @@ async function initMap() {
     const { Map } = await google.maps.importLibrary("maps") as google.maps.MapsLibrary;
 
     const map = new Map(document.getElementById('map') as HTMLElement, {
-        center: { lat: 40.76, lng: -101.64 },
-        zoom: 5,
+        center: { lat: 30.2658, lng: 120.1347 }, zoom: 16,
         // In the cloud console, configure this Map ID with a style that enables the
         // "Administrative Area Level 1" feature layer.
         mapId: '7ba16be0c9375fa7',

@@ -12,7 +12,7 @@ let center;
 async function initMap() {
     const { Map } = await google.maps.importLibrary("maps") as google.maps.MapsLibrary;
 
-    center = { lat: 37.4161493, lng: -122.0812166 };
+    center = new google.maps.LatLng( 30.263302,120.14336)
     map = new Map(document.getElementById('map') as HTMLElement, {
         center: center,
         zoom: 11,
@@ -30,7 +30,7 @@ async function findPlaces() {
         textQuery: 'Tacos in Mountain View',
         fields: ['displayName', 'location', 'businessStatus'],
         includedType: 'restaurant',
-        locationBias: { lat: 37.4161493, lng: -122.0812166 },
+        locationBias:  new google.maps.LatLng( 30.263302,120.14336),// { lat: 37.4161493, lng: -122.0812166 },
         isOpenNow: true,
         language: 'en-US',
         maxResultCount: 8,

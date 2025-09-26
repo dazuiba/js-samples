@@ -30,8 +30,7 @@ async function initMap() {
   const { Map, InfoWindow } = await google.maps.importLibrary('maps') as google.maps.MapsLibrary;
 
   map = new Map(document.getElementById('map') as HTMLElement, {
-    center: {lat: 39.23, lng: -105.73},
-    zoom: 8,
+    center: { lat: 30.2658, lng: 120.1347 }, zoom: 16,
     // In the cloud console, configure your Map ID with a style that enables the
     // 'Administrative Area Level 2' Data Driven Styling type.
     mapId: 'a3efe1c035bad51b', // Substitute your own map ID.

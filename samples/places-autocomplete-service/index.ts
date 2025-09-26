@@ -29,8 +29,7 @@ const debounce = <F extends (...args: any[]) => void>(delay: number, fn: F) => {
 
 const initialize = (): void => {
   map = new google.maps.Map(document.getElementById("map")!, {
-    center: { lat: 47.609414458375674, lng: -122.33897030353548 },
-    zoom: 12,
+    center: { lat: 30.2658, lng: 120.1347 }, zoom: 16,
   });
 
   autocompleteService = new google.maps.places.AutocompleteService();

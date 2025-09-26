@@ -32,8 +32,8 @@ function MakeControl(controlDiv: HTMLElement, label: string) {
 function initialize() {
   const mapDiv = document.getElementById("map") as HTMLElement;
   const mapOptions = {
-    zoom: 11,
-    center: { lat: 47.46, lng: -122.52 },
+    zoom: 16,
+    center: { lat: 30.2658, lng: 120.1347 },
     disableDefaultUI: true,
   };
   const map = new google.maps.Map(mapDiv, mapOptions);

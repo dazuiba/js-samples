@@ -12,8 +12,8 @@ let map: google.maps.Map;
 const cameraOptions: google.maps.CameraOptions = {
   tilt: 0,
   heading: 0,
-  zoom: 3,
-  center: { lat: 35.6594945, lng: 139.6999859 },
+  zoom: 16,
+  center: { lat: 30.2658, lng: 120.1347 },
 };
 
 const mapOptions = {

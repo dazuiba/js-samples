@@ -28,8 +28,7 @@ let censusMin = Number.MAX_VALUE,
 function initMap(): void {
   // load the map
   map = new google.maps.Map(document.getElementById("map") as HTMLElement, {
-    center: { lat: 40, lng: -100 },
-    zoom: 4,
+    center: { lat: 30.2658, lng: 120.1347 }, zoom: 16,
     styles: mapStyle,
   });
 

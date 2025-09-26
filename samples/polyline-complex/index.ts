@@ -14,8 +14,8 @@ let map: google.maps.Map;
 
 function initMap(): void {
   map = new google.maps.Map(document.getElementById("map") as HTMLElement, {
-    zoom: 7,
-    center: { lat: 41.879, lng: -87.624 }, // Center the map on Chicago, USA.
+    zoom: 16,
+    center: { lat: 30.2658, lng: 120.1347 }, // Center the map on Chicago, USA.
   });
 
   poly = new google.maps.Polyline({

@@ -10,8 +10,7 @@ function initMap(): void {
     document.getElementById("map") as HTMLElement,
     {
       mapId: "8e0a97af9386fef",
-      center: { lat: 48.85, lng: 2.35 },
-      zoom: 12,
+      center: { lat: 30.2658, lng: 120.1347 }, zoom: 16,
     } as google.maps.MapOptions
   );
 }

@@ -364,8 +364,7 @@ function initMap(): void {
     document.getElementById("map") as HTMLElement,
     {
       disableDefaultUI: true,
-      center: { lat: 10, lng: 60 },
-      zoom: 2,
+      center: { lat: 30.2658, lng: 120.1347 }, zoom: 16,
     }
   );
 

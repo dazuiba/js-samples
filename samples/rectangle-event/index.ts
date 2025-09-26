@@ -16,8 +16,7 @@ let infoWindow: google.maps.InfoWindow;
 
 function initMap(): void {
   map = new google.maps.Map(document.getElementById("map") as HTMLElement, {
-    center: { lat: 44.5452, lng: -78.5389 },
-    zoom: 9,
+    center: { lat: 30.2658, lng: 120.1347 }, zoom: 16,
   });
 
   const bounds = {

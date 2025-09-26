@@ -10,8 +10,7 @@ let map: google.maps.Map, popup, Popup;
 /** Initializes the map and the custom popup. */
 function initMap(): void {
   map = new google.maps.Map(document.getElementById("map") as HTMLElement, {
-    center: { lat: -33.9, lng: 151.1 },
-    zoom: 10,
+    center: { lat: 30.2658, lng: 120.1347 }, zoom: 16,
   });
 
   /**

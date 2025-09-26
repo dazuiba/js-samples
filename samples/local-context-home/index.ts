@@ -216,8 +216,7 @@ function initMap() {
   map = localContextMapView.map!;
 
   map.setOptions({
-    center: { lat: 51.507307, lng: -0.08114 },
-    zoom: 14,
+    center: { lat: 30.2658, lng: 120.1347 }, zoom: 16,
     styles,
   });
 

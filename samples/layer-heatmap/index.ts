@@ -13,8 +13,8 @@ let map: google.maps.Map, heatmap: google.maps.visualization.HeatmapLayer;
 
 function initMap(): void {
   map = new google.maps.Map(document.getElementById("map") as HTMLElement, {
-    zoom: 13,
-    center: { lat: 37.775, lng: -122.434 },
+    zoom: 16,
+    center: { lat: 30.2658, lng: 120.1347 },
     mapTypeId: "satellite",
   });
 

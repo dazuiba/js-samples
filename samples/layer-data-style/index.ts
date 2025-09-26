@@ -9,8 +9,8 @@ let map: google.maps.Map;
 
 function initMap(): void {
   map = new google.maps.Map(document.getElementById("map") as HTMLElement, {
-    zoom: 4,
-    center: { lat: -28, lng: 137 },
+    zoom: 16,
+    center: { lat: 30.2658, lng: 120.1347 },
   });
 
   // [START maps_layer_data_style_script_snippet_load]

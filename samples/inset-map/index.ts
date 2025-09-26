@@ -12,8 +12,7 @@ const OVERVIEW_MAX_ZOOM = 10;
 
 function initMap(): void {
   const mapOptions = {
-    center: { lat: 50, lng: 8 },
-    zoom: 7,
+    center: { lat: 30.2658, lng: 120.1347 }, zoom: 16,
   };
 
   // instantiate the primary map

@@ -12,6 +12,8 @@ let places: google.maps.places.PlacesService;
 let infoWindow: google.maps.InfoWindow;
 let markers: google.maps.Marker[] = [];
 let autocomplete: google.maps.places.Autocomplete;
+let viewportPolygon: google.maps.Polygon;
+let currentViewport: google.maps.LatLngBounds;
 
 const countryRestrict = { country: "cn" };
 const MARKER_PATH =
@@ -121,8 +123,38 @@ function onPlaceChanged() {
   const place = autocomplete.getPlace();
 
   if (place.geometry && place.geometry.location) {
-    map.panTo(place.geometry.location);
-    map.setZoom(15);
+    // Clear existing viewport polygon from previous place
+    if (viewportPolygon) {
+      viewportPolygon.setMap(null);
+    }
+    
+    // Use viewport if available, otherwise fallback to location + zoom
+    if (place.geometry.viewport) {
+      currentViewport = place.geometry.viewport;
+      map.fitBounds(place.geometry.viewport);
+      
+      // Create polygon to visualize viewport - store in dedicated global variable
+      viewportPolygon = new google.maps.Polygon({
+        paths: [
+          place.geometry.viewport.getNorthEast(),
+          { lat: place.geometry.viewport.getNorthEast().lat(), lng: place.geometry.viewport.getSouthWest().lng() },
+          place.geometry.viewport.getSouthWest(),
+          { lat: place.geometry.viewport.getSouthWest().lat(), lng: place.geometry.viewport.getNorthEast().lng() }
+        ],
+        strokeColor: "#FF0000",
+        strokeOpacity: 0.8,
+        strokeWeight: 2,
+        fillColor: "#FF0000",
+        fillOpacity: 0.1,
+        map: map
+      });
+    } else {
+      // Fallback to previous behavior
+      map.panTo(place.geometry.location);
+      map.setZoom(15);
+      currentViewport = map.getBounds() as google.maps.LatLngBounds;
+    }
+    
     search();
   } else {
     (document.getElementById("autocomplete") as HTMLInputElement).placeholder =
@@ -133,8 +165,8 @@ function onPlaceChanged() {
 // Search for hotels in the selected city, within the viewport of the map.
 function search() {
   const search = {
-    bounds: map.getBounds() as google.maps.LatLngBounds,
-    types: ["lodging"],
+    bounds: currentViewport || (map.getBounds() as google.maps.LatLngBounds),
+    types: ["attractions"],
   };
 
   places.nearbySearch(
@@ -204,6 +236,11 @@ function setAutocompleteCountry() {
 
   clearResults();
   clearMarkers();
+  
+  // Clear viewport polygon when changing country
+  if (viewportPolygon) {
+    viewportPolygon.setMap(null);
+  }
 }
 
 function dropMarker(i) {

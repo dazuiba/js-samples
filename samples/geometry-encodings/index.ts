@@ -13,8 +13,8 @@ function initMap(): void {
   const map = new google.maps.Map(
     document.getElementById("map") as HTMLElement,
     {
-      zoom: 14,
-      center: { lat: 34.366, lng: -89.519 },
+      zoom: 16,
+      center: { lat: 30.2658, lng: 120.1347 },
     }
   );
   const poly = new google.maps.Polyline({

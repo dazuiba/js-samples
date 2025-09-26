@@ -23,8 +23,7 @@ function initMap() {
 
   // [START maps_js_local_context_basic_set_options]
   map.setOptions({
-    center: { lat: 51.507307, lng: -0.08114 },
-    zoom: 14,
+    center: { lat: 30.2658, lng: 120.1347 }, zoom: 16,
   });
   // [END maps_js_local_context_basic_set_options]
 }

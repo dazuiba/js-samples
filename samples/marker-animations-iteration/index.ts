@@ -21,8 +21,8 @@ let map: google.maps.Map;
 
 function initMap(): void {
   map = new google.maps.Map(document.getElementById("map") as HTMLElement, {
-    zoom: 12,
-    center: { lat: 52.52, lng: 13.41 },
+    zoom: 16,
+    center: { lat: 30.2658, lng: 120.1347 },
   });
 
   document.getElementById("drop")!.addEventListener("click", drop);

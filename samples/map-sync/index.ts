@@ -6,8 +6,7 @@
 
 // [START maps_map_sync]
 const map = new google.maps.Map(document.getElementById("map") as HTMLElement, {
-  center: { lat: -34.397, lng: 150.644 },
-  zoom: 8,
+  center: { lat: 30.2658, lng: 120.1347 }, zoom: 16,
 });
 
 declare global {

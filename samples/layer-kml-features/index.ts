@@ -9,8 +9,8 @@ function initMap(): void {
   const map = new google.maps.Map(
     document.getElementById("map") as HTMLElement,
     {
-      zoom: 12,
-      center: { lat: 37.06, lng: -95.68 },
+      zoom: 16,
+      center: { lat: 30.2658, lng: 120.1347 },
     }
   );
 

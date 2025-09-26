@@ -8,8 +8,7 @@ let mapLeft: google.maps.Map, mapRight: google.maps.Map;
 // [START maps_split_map_panes]
 function initMap(): void {
   const mapOptions = {
-    center: { lat: 44.5250489, lng: -110.83819 },
-    zoom: 18,
+    center: { lat: 30.2658, lng: 120.1347 }, zoom: 16,
     scaleControl: false,
     streetViewControl: false,
   };

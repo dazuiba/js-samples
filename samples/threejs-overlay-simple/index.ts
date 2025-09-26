@@ -25,8 +25,8 @@ let map: google.maps.Map;
 const mapOptions = {
   tilt: 0,
   heading: 0,
-  zoom: 18,
-  center: { lat: 35.6594945, lng: 139.6999859 },
+  zoom: 16,
+  center: { lat: 30.2658, lng: 120.1347 },
   mapId: "15431d2b469f209e",
   // disable interactions due to animation loop and moveCamera
   disableDefaultUI: true,

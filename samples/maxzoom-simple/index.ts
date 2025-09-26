@@ -11,8 +11,8 @@ let infoWindow: google.maps.InfoWindow;
 
 function initMap(): void {
   map = new google.maps.Map(document.getElementById("map") as HTMLElement, {
-    zoom: 11,
-    center: { lat: 35.6894, lng: 139.692 },
+    zoom: 16,
+    center: { lat: 30.2658, lng: 120.1347 },
     mapTypeId: "hybrid",
   });
 

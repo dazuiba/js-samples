@@ -10,8 +10,7 @@ function initMap(): void {
   const map = new google.maps.Map(
     document.getElementById("map") as HTMLElement,
     {
-      center: { lat: 40.674, lng: -73.945 },
-      zoom: 12,
+      center: { lat: 30.2658, lng: 120.1347 }, zoom: 16,
       styles: [
         { elementType: "geometry", stylers: [{ color: "#242f3e" }] },
         { elementType: "labels.text.stroke", stylers: [{ color: "#242f3e" }] },
